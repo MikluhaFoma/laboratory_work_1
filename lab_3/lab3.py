@@ -84,13 +84,14 @@ class BTreeMap: #Класс для ассациативного массива
                 return
             else:
                 node = node.children[i] # переходим к следующему узлу
-
-btree_map = BTreeMap(2)
-btree_map.set(1, "one") # добавляем здачение по ключу
-btree_map.set(2, "two")
-btree_map.set(3, "three")
-print(btree_map.get(1)) # выводим результат по ключу
-print(btree_map.get(2))
-print(btree_map.get(3))
-btree_map.update(2, "new two") # изменяем значение по ключу
-print(btree_map.get(2))
+                
+if __name__ == "__main__":
+    btree_map = BTreeMap(2)
+    btree_map.set(1, "one") # добавляем здачение по ключу
+    btree_map.set(2, "two")
+    btree_map.set(3, "three")
+    print(btree_map.get(1)) # выводим результат по ключу
+    print(btree_map.get(2))
+    print(btree_map.get(3))
+    btree_map.update(2, "new two") # изменяем значение по ключу
+    print(btree_map.get(2))
