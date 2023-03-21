@@ -1,1 +1,1 @@
-# laboratory_work_1
+# laboratory_work
