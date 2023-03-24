@@ -17,7 +17,7 @@ class BTreeMap: #Класс для ассациативного массива
         else:
             return self.Get(key, self.root) #возвращаем найденное значенине
 
-    def Get(self, key, node):# функция поиска значения по ключу
+    def Get(self, key, node):# метод поиска значения по ключу
         i = 0
         while i < len(node.keys) and key > node.keys[i]: # пока есть ключ и искомый ключ не больше чем требуется
             i += 1
@@ -28,7 +28,7 @@ class BTreeMap: #Класс для ассациативного массива
         else:
             return self.Gget(key, node.children[i]) # если ключ не найден в данном узле, ищем его в следующем
 
-    def set(self, key, value): # добавление элемента в дерево
+    def set(self, key, value): # метод добавление элемента в дерево
         if self.root is None: # если элементов ещё нет
             self.root = BTreeNode(self.N, True) # создаём новый объект, назначая его листом
             self.root.keys.append(key) # добавляем ключь
