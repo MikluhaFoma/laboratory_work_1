@@ -14,35 +14,35 @@ class Graph: # для Крускала
     def apply_union(self, parent, rank, x, y):#объединение деревьев
         xroot = self.search(parent, x)
         yroot = self.search(parent, y)
-        if rank[xroot] < rank[yroot]:
+        if rank[xroot] < rank[yroot]:# определяем, какое дерево находится выше (оно будет родителем для другого дерева)
             parent[xroot] = yroot
         elif rank[xroot] > rank[yroot]:
             parent[yroot] = xroot
-        else:
+        else:# если деревья имеют одинаковую высоту 
             parent[yroot] = xroot
             rank[xroot] += 1
 
     def kruskal(self):
         result = []
-        i = 0
-        e = 0
-        self.graph = sorted(self.graph, key=lambda item: item[2]) #сортируем рёбра в порядке возрастания весов
-        parent = []
-        rank = []
-        for node in range(self.V):
-            parent.append(node)
+        i = 0 # переменная для перебора рёбер
+        j = 0 # переменная для подсчёта числа рёбер в минимальном оставном дереве 
+        self.graph = sorted(self.graph, key=lambda item: item[2]) #сортируем рёбра в порядке возрастания веса
+        parent = [] # список для родителей вершин 
+        rank = [] # список для высот деревьев
+        for node in range(self.V): # проходимся по всем вершинам графа 
+            parent.append(node) # добавляем вершину в списокк родителей 
             rank.append(0)
-        while e < self.V - 1: #проверка на цикл
-            u, v, w = self.graph[i]
-            i = i + 1
+        while j < self.V - 1: #добавляем рёбра в минимальное оставное дерево
+            u, v, w = self.graph[i] # по очереди берем рёбра из списка рёбер
+            i = i + 1 # пеерход к следующему ребру 
             x = self.search(parent, u)
             y = self.search(parent, v)
-            if x != y:
-                e = e + 1
+            if x != y: # проверка на принадлежность вершины одному и тому же дереву
+                j = j + 1 # переход к следующему ребру 
                 result.append([u, v, w])#записываем в результат
-                self.apply_union(parent, rank, x, y)
+                self.apply_union(parent, rank, x, y) # объединяем деревья 
         for u, v, weight in result:
-            print("Edge:",u, v,end =" ")
+            print("Рёбра:",u, v, end =" ")
             print("-",weight)
 
 class GraphB:#для Прима
@@ -50,8 +50,8 @@ class GraphB:#для Прима
         self.vertices = {}
 
     def add_vertex(self, vertex):
-        self.vertices[vertex] = []
+        self.vertices[vertex] = []# создаём список для хранения рёбер 
 
-    def add_edge(self, vertex1, vertex2, weight):
+    def add_edge(self, vertex1, vertex2, weight):# добавляем рёбра к вершинам 
         self.vertices[vertex1].append((vertex2, weight))
         self.vertices[vertex2].append((vertex1, weight))
