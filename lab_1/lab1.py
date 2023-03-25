@@ -21,38 +21,38 @@ class PriorityQueue:
         self.size += 1
         self.mas.append(item)
         i = self.size - 1
-        parent = (i - 1) // 2
+        parent = (i - 1) // 2# вычисляем индекс родительского элемента для последнего добавленного элемента  
 
-        while ((i > 0) and self.mas[parent] < self.mas[i]):
+        while ((i > 0) and self.mas[parent] < self.mas[i]):# если новый элемент больше родительсктго, меняем их местами 
             temp = self.mas[i]
             self.mas[i] = self.mas[parent]
             self.mas[parent] = temp
-
             i = parent
-            parent = (i - 1) // 2
+            parent = (i - 1) // 2# заново вычиляем индекс
 
     def del_element(self, index):#Удаление элемента
         self.mas[index] = -1
         while True:
-            left = 2 * index + 1
-            right = 2 * index + 2
-            large = index
+            left = 2 * index + 1# вычисляем индекс левого потомка
+            right = 2 * index + 2# вычисляем индекс правого потомка
+            large = index# индекс с максимальным значением 
 
-            if left < self.size and self.mas[left] > self.mas[large]:
+            if left < self.size and self.mas[left] > self.mas[large]:# если левый потомок больше максимального, меняем максимальный элемент
                 large = left
 
-            if right < self.size and self.mas[right] > self.mas[large]:
+            if right < self.size and self.mas[right] > self.mas[large]:# если правый потомок больше максимального, меняем максимальный элемент
                 large = right
 
-            if large == index:
+            if large == index:# если максимальный элемент не изменился или нашёлся, выходим их цикла 
                 break
-
+            # меняем элементы, пока не найдём максимальный 
             temp = self.mas[index]
             self.mas[index] = self.mas[large]
             self.mas[large] = temp
             index = large
-        self.mas.pop(index)
-        self.size -= 1
+            
+        self.mas.pop(index)# удаляем максимальный элемента (т.е. с большим приоритетом)
+        self.size -= 1# уменьшаем размер массива
 
     def print_max_element(self):#Вывод максимального элемента
         print(self.mas[0])
@@ -74,9 +74,9 @@ if __name__ == "__main__":
     print("Количество элементов очереди:")
     q.len_queue()
     print()
-    print("Максимальный элемент очереди:")
+    print("Элемент с наибольшим приоритетом очереди:")
     q.print_max_element()
     print()
     q.del_element(0)
-    print("После удаления максимального элемента:")
+    print("После удаления элемента с наибольшим приоиртетом:")
     q.show()
