@@ -42,7 +42,7 @@ def dijkstra(graph, start):
             if distance < distances[neighbor]:
                 distances[neighbor] = distance
                 heapq.heappush(pq, (distance, neighbor))
-    return distances#возвращаем кратчайшие расстояние от начальной вершины до остальных
+    return distances#возвращаем кратчайшее расстояние от начальной вершины до остальных
 
 
 def prim_algorithm(graph, start_vertex):
@@ -52,7 +52,7 @@ def prim_algorithm(graph, start_vertex):
     while len(visited) != len(graph.vertices):#проходим все вершины
         for vertex in visited:#перебор вершин и связывающие их ребра
             for neighbor, weight in graph.vertices[vertex]:
-                if neighbor not in visited:#если вес текущего ребра меньше текущего меньшего между посещённой и не посещённой врершиной
+                if neighbor not in visited:#если вес текущего ребра меньше текущего меньшего между посещённой и не посещённой вершиной
                     if weight < min_edge[2]:#если меньше, то заменяем
                         min_edge = (vertex, neighbor, weight)
         edges.append(min_edge)
@@ -65,10 +65,10 @@ def prim_algorithm(graph, start_vertex):
 def floyd_warshall_algorithm(graph):
     n = len(graph)#размер графа
     dist = graph
-    for k in range(n):#выполняется раз равное количеству вершин
+    for k in range(n):#выполняется количество раз, равное количеству вершин
         for i in range(n):
             for j in range(n):
-                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])#обновляются значения мингимального расстояния между вершинами
+                dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])#обновляются значения минимального расстояния между вершинами
 
     return dist#матрица с кротчайшими расстояниями между парами вершин графа
 
