@@ -3,19 +3,19 @@ class BTreeNode: #Класс для узла
         self.N = N #количество ключей
         self.leaf = leaf #для проверки на лист (крайний элемент в дереве)
         self.keys = [] #ключи
-        self.values = [] #знаения
+        self.values = [] #знчения
         self.children = [] #ссылки на потомков
 
-class BTreeMap: #Класс для ассациативного массива
+class BTreeMap: #Класс для ассоциативного массива
     def __init__(self, N):
         self.N = N #кол-во ключей в каждом узле
         self.root = None #корень дерева
 
-    def get(self, key):# получение знаения по ключу
+    def get(self, key):# получение значения по ключу
         if self.root is None: # если ключ не связан с значением
             return None
         else:
-            return self.Get(key, self.root) #возвращаем найденное значенине
+            return self.Get(key, self.root) #возвращаем найденное значение 
 
     def Get(self, key, node):# метод поиска значения по ключу
         i = 0
@@ -28,15 +28,15 @@ class BTreeMap: #Класс для ассациативного массива
         else:
             return self.Gget(key, node.children[i]) # если ключ не найден в данном узле, ищем его в следующем
 
-    def set(self, key, value): # метод добавление элемента в дерево
+    def set(self, key, value): # метод добавления элемента в дерево
         if self.root is None: # если элементов ещё нет
             self.root = BTreeNode(self.N, True) # создаём новый объект, назначая его листом
-            self.root.keys.append(key) # добавляем ключь
+            self.root.keys.append(key) # добавляем ключ
             self.root.values.append(value) # добавляем значение
         else:
-            node = self.root # присваеваем узлу корень
+            node = self.root # присваиваем узлу корень
             if len(node.keys) == 2 * self.N - 1: # если узел не лист
-                new_root = BTreeNode(self.N, False) # создаёмновый дочерний узел
+                new_root = BTreeNode(self.N, False) # создаём новый дочерний узел
                 new_root.children.append(node)
                 self.Split_child(new_root, 0, node)
                 node = new_root
@@ -60,10 +60,10 @@ class BTreeMap: #Класс для ассациативного массива
     def Split_child(self, parent, i, child):
         new_child = BTreeNode(child.N, child.leaf) # дублируем узел
         parent.children.insert(i + 1, new_child) # вставляем новый узел
-        parent.keys.insert(i, child.keys[self.N - 1]) # записывем текущий ключ в прошлый узел
+        parent.keys.insert(i, child.keys[self.N - 1]) # записываем текущий ключ в прошлый узел
         parent.values.insert(i, child.values[self.N - 1]) # записываем текущее значение в прошлый узел
-        new_child.keys = child.keys[self.N:] # присваеваем прошлый клчю
-        new_child.values = child.values[self.N:] # присваеваем прошлое значение
+        new_child.keys = child.keys[self.N:] # присваиваем прошлый ключ
+        new_child.values = child.values[self.N:] # присваиваем прошлое значение
         child.keys = child.keys[:self.N - 1] # переписываем ключи
         child.values = child.values[:self.N - 1] # переписываем значения
         if not child.leaf: # если узел не лист, помещаем узел в конец
@@ -71,7 +71,7 @@ class BTreeMap: #Класс для ассациативного массива
             child.children = child.children[:self.N]
 
     def update(self, key, value):
-        node = self.root # присваеваем начало дерева
+        node = self.root # присваиваем начало дерева
         while node is not None: # пока дерево не закончено
             i = 0
             while i < len(node.keys) and key > node.keys[i]: # пока есть ключ
@@ -87,7 +87,7 @@ class BTreeMap: #Класс для ассациативного массива
                 
 if __name__ == "__main__":
     btree_map = BTreeMap(2)
-    btree_map.set(1, "one") # добавляем здачение по ключу
+    btree_map.set(1, "one") # добавляем значение по ключу
     btree_map.set(2, "two")
     btree_map.set(3, "three")
     print(btree_map.get(1)) # выводим результат по ключу
