@@ -23,12 +23,12 @@ class PriorityQueue:
         i = self.size - 1
         parent = (i - 1) // 2# вычисляем индекс родительского элемента для последнего добавленного элемента  
 
-        while ((i > 0) and self.mas[parent] < self.mas[i]):# если новый элемент больше родительсктго, меняем их местами 
+        while ((i > 0) and self.mas[parent] < self.mas[i]):# если новый элемент больше родительского, меняем их местами 
             temp = self.mas[i]
             self.mas[i] = self.mas[parent]
             self.mas[parent] = temp
             i = parent
-            parent = (i - 1) // 2# заново вычиляем индекс
+            parent = (i - 1) // 2# заново вычисляем индекс
 
     def del_element(self, index):#Удаление элемента
         self.mas[index] = -1
@@ -43,7 +43,7 @@ class PriorityQueue:
             if right < self.size and self.mas[right] > self.mas[large]:# если правый потомок больше максимального, меняем максимальный элемент
                 large = right
 
-            if large == index:# если максимальный элемент не изменился или нашёлся, выходим их цикла 
+            if large == index:# если максимальный элемент не изменился или нашёлся, выходим из цикла 
                 break
             # меняем элементы, пока не найдём максимальный 
             temp = self.mas[index]
@@ -51,7 +51,7 @@ class PriorityQueue:
             self.mas[large] = temp
             index = large
             
-        self.mas.pop(index)# удаляем максимальный элемента (т.е. с большим приоритетом)
+        self.mas.pop(index)# удаляем максимальный элемент (т.е. с большим приоритетом)
         self.size -= 1# уменьшаем размер массива
 
     def print_max_element(self):#Вывод максимального элемента
