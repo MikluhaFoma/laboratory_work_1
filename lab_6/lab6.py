@@ -6,9 +6,9 @@ def boyer_moore_search(text, pattern):
     '''
     for i in range(len(pattern)): # заполнение таблицы сдвига
         shift_table[pattern[i]] = len(pattern) - i - 1
-    result_list = [] # список для хранения найенных вложений
+    result_list = [] # список для хранения найденных вложений
     i = len(pattern) - 1
-    while i < len(text): # проходиися по тексту с конца в начало и ищем совпадение символов, если символы не совпали, делаем сдвиг согласно таблице сдвигов
+    while i < len(text): # проходимся по тексту с конца в начало и ищем совпадение символов, если символы не совпали, делаем сдвиг согласно таблице сдвигов
         j = len(pattern) - 1
         while text[i] == pattern[j]:
             if j == 0:
@@ -21,14 +21,14 @@ def boyer_moore_search(text, pattern):
 
 # Алгоритм  Рабина-Карпа
 def rabin_karp_search(text, pattern):
-    n = len(text) # длинна текста
-    m = len(pattern) # длинна искомого слова
+    n = len(text) # длина текста
+    m = len(pattern) # длина искомого слова
     pattern_hash = hash(pattern) # вычисляем хеш для искомого слова (каждой букве присваивается целое число)
     result_list = []
     for i in range(n - m + 1):
         if hash(text[i:i+m]) == pattern_hash: # вычисляем хеш выделенной подстроки
             if text[i:i+m] == pattern: # сравниваем вычисленный хеш с искомым (сравниваются последовательности цифр или числа)
-                result_list.append(i) # если текущий хеш и искомый совпали, записываем в результат ,
+                result_list.append(i) # если текущий хеш и искомый совпали, записываем в результат
     return result_list
 
 # Алгоритм  Кнута-Морриса-Пратта
