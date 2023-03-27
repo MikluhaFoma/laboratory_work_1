@@ -21,7 +21,7 @@ class BTreeMap: #Класс для ассоциативного массива
         i = 0
         while i < len(node.keys) and key > node.keys[i]: # пока есть ключ и искомый ключ не больше чем требуется
             i += 1
-        if i < len(node.keys) and key == node.keys[i]: # если искомый ключ найден, возвращаем соответсвующее значение
+        if i < len(node.keys) and key == node.keys[i]: # если искомый ключ найден, возвращаем соответствующее значение
             return node.values[i]
         elif node.leaf: # если ключ является листом, возвращаем None
             return None
@@ -51,7 +51,7 @@ class BTreeMap: #Класс для ассоциативного массива
             node.keys.insert(i, key) # добавляем значение ключа
             node.values.insert(i, value) # добавляем значение по ключу
         else:
-            if len(node.children[i].keys) == 2 * self.N - 1: # если количетсво узлов потомков на один меньше, чем удвоенное значение ключей, добавляем новый узел в глубину
+            if len(node.children[i].keys) == 2 * self.N - 1: # если количество узлов потомков на один меньше, чем удвоенное значение ключей, добавляем новый узел в глубину
                 self.Split_child(node, i, node.children[i])
                 if key > node.keys[i]:
                     i += 1
