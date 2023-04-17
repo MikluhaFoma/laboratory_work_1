@@ -1,46 +1,56 @@
-class HashMap:
-  def __init__(self):
-      #Инициализация хэш-таблицы
-      self.capacity = 50 # Максимальное количество элементов в хэш-таблице
-      self.size = 0 # Текущее количество элементов в хэш-таблице
-      self.keys = [None]*self.capacity # Массив ключей
-      self.values = [None]*self.capacity # Массив значений
+class hash_map: # Определение класса hash_map
+    def __init__(self, max_load_factor = 2.0): # Конструктор класса, инициализирует хеш-таблицу с пустыми списками
+        self.size = 0
+        self.capacity = 8 # Начальная емкость хеш-таблицы
+        self.max_load_factor = max_load_factor
+        self.buckets = [[] for _ in range(self.capacity)]
 
-  def hash(self, key): # Хэш-функция
-      hashsum = 0
-      for idx, c in enumerate(key): # Получаем индекс и значение ключа
-          hashsum += (idx + len(key)) ** ord(c)
-          hashsum = hashsum % self.capacity # Получение индекса элемента в хэш-таблице
-      return hashsum # Возвращаем вычисленное значение
+    def clear(self): # Метод для удаления всех элементов из хеш-таблицы
+        self.size = 0
+        self.capacity = 8
+        self.buckets = [[] for _ in range(self.capacity)]
 
-  def set(self, key, value): # Метод добавление элемента
-      if self.size == self.capacity:
-          raise Exception('Хэш-таблица заполнена') # Если хэш-таблица заполнена, выбрасываем исключение
-      index = self.hash(key) # Получение индекса элемента в хэш-таблице
-      while self.keys[index] is not None: # Пока не найдено свободное место для элемента
-          if self.keys[index] == key: # Если ключ уже есть в хэш-таблице
-              self.values[index] = value # Обновляем значение элемента
-              return
-          index = (index + 1) % self.capacity # Используем метод линейного опробования для разрешения коллизий
-      self.keys[index] = key # Добавляем ключ в хэш-таблицу
-      self.values[index] = value # Добавляем значение элемента в хэш-таблицу
-      self.size += 1 # Увеличиваем количество элементов в хэш-таблице
+    def hash_function(self, key):
+        return hash(key) % self.capacity
 
-  def get(self, key): # Получение значения элемента
-      index = self.hash(key) # Получение индекса элемента в хэш-таблице
-      while self.keys[index] is not None: # Пока не найдено значение элемента или свободное место
-          if self.keys[index] == key: # Если ключ найден
-              return self.values[index] # Возвращаем значение элемента
-          index = (index + 1) % self.capacity # Используем метод линейного опробования для разрешения коллизий
-      return None # Если ключ не найден, возвращаем None
+    def set(self, key, value): # Метод добавления элемента в таблицу
+        bucket = self.buckets[self.hash_function(key)]
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                bucket[i] = (key, value)
+                break
+        else:
+            bucket.append((key, value))
+            self.size += 1
+            if self.size / self.capacity > self.max_load_factor:
+                self._resize()
 
-  def delete(self, key): # Удаление элемента
-      index = self.hash(key) # Получение индекса элемента в хэш-таблице
-      while self.keys[index] is not None: # Пока не найдено значение элемента или свободное место
-          if self.keys[index] == key: # Если ключ найден
-              self.keys[index] = None # Удаляем ключ
-              self.values[index] = None # Удаляем значение элемента
-              self.size -= 1 # Уменьшаем количество элементов в хэш-таблице
-              return
-          index = (index + 1) % self.capacity # Используем метод линейного опробования для разрешения коллизий
-      return None # Если ключ не найден, возвращаем None
+    def remove(self, key): # Метод для удаления элемента по ключу
+        bucket = self.buckets[self.hash_function(key)]
+        for i, (k, v) in enumerate(bucket):
+            if k == key:
+                del bucket[i]
+                self.size -= 1
+                return
+        raise KeyError(key)
+
+    def get(self, key, default = None):# Метод получения значения по ключу
+        bucket = self.buckets[self.hash_function(key)]
+        for k, v in bucket:
+            if k == key:
+                return v
+        return default
+
+    def __len__(self): # Метод для получения количества элементов в хеш-таблице
+        return self.size
+
+    def load_factor(self): # Метод для получения текущего уровня загруженности хеш-таблицы
+        return self.size / self.capacity
+
+    def _resize(self): # Метод для изменения коэффициента загрузки хеш-таблицы и перехеширования всех элементов хеш-таблицы
+        self.capacity = self.capacity * 2 + 1
+        new_buckets = [[] for _ in range(self.capacity)]
+        for bucket in self.buckets:
+            for k, v in bucket:
+                new_buckets[self.hash_function(k)].append((k, v))
+        self.buckets = new_buckets
