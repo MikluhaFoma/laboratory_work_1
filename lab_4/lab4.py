@@ -1,17 +1,12 @@
 from lib import *
 
-hash_table = HashMap() # Создание экземпляра хэш-таблицы
+my_map = hash_map()
+# Добавление пары ключ-значение
+my_map.set('one', 1)
+my_map.set('two', 2)
 
-#Добавление элементов
-hash_table.set('apple', 10)
-hash_table.set('banana', 20)
-hash_table.set('cherry', 30)
-
-#Получение значений элементов
-print(hash_table.get('apple'))
-print(hash_table.get('banana'))
-print(hash_table.get('cherry'))
-
-hash_table.delete('banana') # Удаление элемента
-
-print(hash_table.get('banana')) # Проверка удаления элемента
+print(my_map.get('one')) # Получение значение по ключу
+print("Количество элементов в таблице:", len(my_map)) # Получение количества элементов в таблице
+my_map.remove('two') # Удаление по ключу
+print("Количество элементов в таблице после удаления элемента:", len(my_map))
+print("Текущий уровень загруженности: ", my_map.load_factor())
